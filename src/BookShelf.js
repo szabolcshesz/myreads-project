@@ -12,6 +12,7 @@ function BookShelf (props) {
             <BookItem
               bookKey={book.id}
               book={book}
+              onUpdateBookShelf={props.onUpdateBookShelf}
             />
           ))}
         </ol>

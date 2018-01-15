@@ -18,6 +18,35 @@ class BooksApp extends React.Component {
     })
   }
 
+  moveToShelf = (book) => {
+    const books = this.state.books;
+    const selectedBookID = books.findIndex((product) => product.id === book.id);
+    if (selectedBookID === -1) {
+      //Selected book wasn't on my shelf -  so lets add to it
+      books.push(book);
+    }
+    if (selectedBookID !== -1) {
+      // Selected book was already on one of my shelves
+      if (book.shelf === 'none') {
+       // Removed from the shelf
+        books.splice(selectedBookID, 1);
+      }
+      if (book.shelf !== 'none') {
+        // Move betweeen shelves
+        books[selectedBookID] = book;
+      }
+    }
+    this.setState({ books });
+  };
+
+  updateBookShelf = (book, shelf) => {
+    BooksAPI.update(book, shelf)
+    .then(() => {
+        book.shelf = shelf;
+        this.moveToShelf(book);
+      });
+  }
+
   render() {
     return (
       <div className="app">
@@ -48,7 +77,8 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <BookList
-              books={this.state.books}
+            books={this.state.books}
+            onUpdateBookShelf={this.updateBookShelf}
             />
 
             <div className="open-search">

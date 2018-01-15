@@ -29,6 +29,7 @@ class BookList extends Component {
             <BookShelf
               title={shelf.name}
               books={shelfLoader(shelf.id)}
+              onUpdateBookShelf={this.props.onUpdateBookShelf}
               />
             ))}
       </div>
