@@ -52,7 +52,7 @@ class BookSearch extends Component {
       <div className="search-books-results">
       {query && (list.length === 0 ? (<p>No results found for <em>"{query}"</em></p>)
       : (<p>Showing {list.length} books for <em>"{query}"</em></p>))}
-      <ol>
+      <ol className='books-grid'>
         {list.map((book) => (
           <BookItem
             book={book}
