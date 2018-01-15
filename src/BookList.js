@@ -30,6 +30,7 @@ class BookList extends Component {
               title={shelf.name}
               books={shelfLoader(shelf.id)}
               onUpdateBookShelf={this.props.onUpdateBookShelf}
+              shelfKey={shelf.id}
               />
             ))}
       </div>
