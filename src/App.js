@@ -2,6 +2,7 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import sortBy from 'sort-by';
+import BookList from './BookList'
 
 class BooksApp extends React.Component {
   state = {
@@ -46,14 +47,9 @@ class BooksApp extends React.Component {
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            {this.state.books.map((book) =>
-              <ol className="books-grid">
-                <li key={book.id}>
-                  <div className="book-title">{book.title}</div>
-                  <div className="book-authors">{book.publisher}</div>
-                </li>
-              </ol>
-            )}
+            <BookList
+              books={this.state.books}
+            />
 
             <div className="open-search">
                 <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
