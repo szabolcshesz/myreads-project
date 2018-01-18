@@ -1,39 +1,54 @@
-import React, { Component } from 'react'
-import * as BooksAPI from './BooksAPI'
-import BookItem from './BookItem'
+import React, { Component } from 'react';
+import * as BooksAPI from './BooksAPI';
+import BookItem from './BookItem';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class BookSearch extends Component {
 
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+    onUpdateBookShelf: PropTypes.func.isRequired,
+    onUpdateBooks: PropTypes.func.isRequired
+  };
+
   state = {
     query: '',
-    list: []
-  }
+    resultlist: []
+  };
 
   timeoutFunc = null;
   timer = null;
 
+  /**
+  * Updates state.query
+  * @param {string} query query string
+  */
   updateQuery = (query) => {
-    this.setState({ query:query })
-    query = query.trim()
-  }
+    this.setState({ query:query });
+  };
 
+  /**
+  * Search function with API call
+  * sets the state.resultlist - the list of results
+  * @param {string} query query string
+  */
   bookSearch = (query) => {
     window.clearTimeout(this.timer);
     this.timeoutFunc = () => {
     BooksAPI.search(query)
       .then((results) => {
-          this.setState({ list: results});
-          return results
+          this.setState({ resultlist: results});
+          //return results;
         });
     }
     this.timer = window.setTimeout(this.timeoutFunc, 500);
-  }
+  };
 
   render() {
-    const { query, list } = this.state;
+    const { query, resultlist } = this.state;
     if (query) {
-      this.bookSearch(query)
+      this.bookSearch(query);
     }
 
     return (
@@ -50,11 +65,13 @@ class BookSearch extends Component {
         </div>
       </div>
       <div className="search-books-results">
-      {query && (list.length === 0 ? (<p>No results found for <em>"{query}"</em></p>)
-      : (<p>Showing {list.length} books for <em>"{query}"</em></p>))}
+      {query && (resultlist.length === 0 ? (<p>No results found for <em>"{query}"</em></p>)
+      : (<p>Showing {resultlist.length} books for <em>"{query}"</em></p>))}
       <ol className='books-grid'>
-        {list.map((book) => (
+        {resultlist.map((book) => (
           <BookItem
+            key={book.id}
+            id={book.id}
             book={book}
             onUpdateBookShelf={this.props.onUpdateBookShelf}
             />

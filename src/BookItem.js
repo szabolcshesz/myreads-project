@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 function BookItem (props) {
 
@@ -7,10 +7,10 @@ function BookItem (props) {
   let updateBookShelf = (event) => {
     const shelf = event.target.value;
     props.onUpdateBookShelf(book, shelf);
-  }
+  };
 
   return(
-    <li key={props.bookKey} className="book" >
+    <li key={props.id} className="book" >
           <div className="book-top">
             <div className="book-cover" style={{ width: 128, height: 174, backgroundImage: `url(${book.imageLinks.thumbnail})`}}></div>
             <div className="book-shelf-changer">

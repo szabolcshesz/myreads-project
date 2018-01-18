@@ -1,5 +1,5 @@
-import React from 'react'
-import BookItem from './BookItem'
+import React from 'react';
+import BookItem from './BookItem';
 
 function BookShelf (props) {
 
@@ -7,10 +7,11 @@ function BookShelf (props) {
     <div className="bookshelf">
       <h2 className="bookshelf-title">{props.title}</h2>
       <div className="bookshelf-books">
-        <ol className="books-grid" key={props.shelfKey}>
+        <ol className="books-grid" key={props.id}>
           {props.books.map((book) => (
             <BookItem
-              bookKey={book.id}
+              key={book.id}
+              id={book.id}
               book={book}
               onUpdateBookShelf={props.onUpdateBookShelf}
             />

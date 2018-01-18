@@ -1,26 +1,30 @@
-import React from 'react'
-import * as BooksAPI from './BooksAPI'
-import './App.css'
+import React from 'react';
+import * as BooksAPI from './BooksAPI';
+import './App.css';
 import sortBy from 'sort-by';
-import BookList from './BookList'
-import BookSearch from './BookSearch'
-import { Route } from 'react-router-dom'
+import BookList from './BookList';
+import BookSearch from './BookSearch';
+import { Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 class BooksApp extends React.Component {
+
   state = {
     query: '',
-    books:[],
-    showSearchPage: false
-  }
+    books:[]
+  };
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       books.sort(sortBy('title'));
-      this.setState({books:books})
+      this.setState({books:books});
     })
-  }
+  };
 
+/**
+* Moves books to bookshelf
+* @param {object} book book object
+*/
   moveToShelf = (book) => {
     const books = this.state.books;
     const selectedBookID = books.findIndex((product) => product.id === book.id);
@@ -42,13 +46,19 @@ class BooksApp extends React.Component {
     this.setState({ books });
   };
 
+  /**
+  * Updates bookshelf
+  * @param {object} book book object
+  * @param {string} shelf shelf choosed
+  */
+
   updateBookShelf = (book, shelf) => {
     BooksAPI.update(book, shelf)
     .then(() => {
         book.shelf = shelf;
         this.moveToShelf(book);
       });
-  }
+  };
 
   render() {
     return (
