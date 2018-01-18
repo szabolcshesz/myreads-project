@@ -20,10 +20,10 @@ Users also can move books between shelves, or can remove it from shelves.
 Before install you must have NODE Package Manager installed on your machine.
 
 ### How to install
+
 Clone this repository and run:
-```
 npm install
 
 ## How to start
-```
+
 npm start
