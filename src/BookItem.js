@@ -2,17 +2,19 @@ import React from 'react';
 
 function BookItem (props) {
 
-  const book = props.book;
+  const { book, onUpdateBookShelf, id } = props;
 
-  let updateBookShelf = (event) => {
+  const updateBookShelf = (event) => {
     const shelf = event.target.value;
-    props.onUpdateBookShelf(book, shelf);
+    onUpdateBookShelf(book, shelf);
   };
+
+  const thumbnailImage = book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/174x128';
 
   return(
     <li key={props.id} className="book" >
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 174, backgroundImage: `url(${book.imageLinks.thumbnail})`}}></div>
+           <div className="book-cover" style={{ width: 128, height: 174, backgroundImage: `url(${thumbnailImage})`}}></div>
             <div className="book-shelf-changer">
             <select value={book.shelf} onChange={updateBookShelf} >
               <option value="none" disabled>Move to...</option>

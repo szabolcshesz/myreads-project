@@ -60,6 +60,18 @@ class BooksApp extends React.Component {
       });
   };
 
+ /**
+ * Gets the shelf name for the books
+ * @param {string} bookId id for the book
+ */
+
+  bookShelfGetter = (bookID) => {
+    let ourBooks = this.state.books
+      .find((book) => book.id === bookID);
+    return ourBooks ? ourBooks.shelf : 'none';
+};
+
+
   render() {
     return (
       <div className="app">
@@ -68,6 +80,7 @@ class BooksApp extends React.Component {
             books={this.state.books}
             onUpdateBooks={this.updateBookShelf}
             onUpdateBookShelf={this.updateBookShelf}
+            bookShelfGetter={this.bookShelfGetter}
           />
         )} />
         <Route exact path="/" render={() => (

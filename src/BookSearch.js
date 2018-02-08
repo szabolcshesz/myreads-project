@@ -9,7 +9,8 @@ class BookSearch extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     onUpdateBookShelf: PropTypes.func.isRequired,
-    onUpdateBooks: PropTypes.func.isRequired
+    onUpdateBooks: PropTypes.func.isRequired,
+    bookShelfGetter: PropTypes.func.isRequired
   };
 
   state = {
@@ -38,8 +39,15 @@ class BookSearch extends Component {
     this.timeoutFunc = () => {
     BooksAPI.search(query)
       .then((results) => {
-          this.setState({ resultlist: results});
-          //return results;
+        if (!results.error) {
+        let shelvesResult = results.map((book) => {
+          book.shelf = this.props.bookShelfGetter(book.id);
+          return book;
+          });
+          this.setState({ resultlist: shelvesResult});
+        } else {
+          this.setState({ resultlist: [] });
+        }
         });
     }
     this.timer = window.setTimeout(this.timeoutFunc, 500);
